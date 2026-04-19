@@ -30,6 +30,7 @@ class AlienFleet:
         self.create_rectangle_fleet(alien_w, alien_h, fleet_w, fleet_h, x_offset, y_offset)
 
     def create_rectangle_fleet(self, alien_w, alien_h, fleet_w, fleet_h, x_offset, y_offset):
+        """Create a rectangular fleet of aliens."""
         for row in range(fleet_h):
             for col in range(fleet_w):
                 current_x = alien_w * col + x_offset
@@ -39,6 +40,7 @@ class AlienFleet:
                 self._create_alien(current_x, current_y)
 
     def calculate_offsets(self, alien_w, alien_h, screen_w, fleet_w, fleet_h):
+        """Calculate the offsets to center the fleet on the screen."""
         half_screen = self.settings.screen_h//2
         fleet_horizontal_space = fleet_w * alien_w
         fleet_vertical_space = fleet_h * alien_h
@@ -46,7 +48,7 @@ class AlienFleet:
         y_offset = int((half_screen - fleet_vertical_space)//2)
         return x_offset,y_offset
 
-    def calculate_fleet_size(self, alien_w, screen_w, alien_h, screen_h):
+    def calculate_fleet_size(self, alien_w, screen_w, alien_h, screen_h) -> tuple[int, int]:
         """Calculate the number of aliens that can fit in a row."""
         fleet_w = (screen_w//alien_w)
         fleet_h = ((screen_h/2)//alien_h)
@@ -67,7 +69,27 @@ class AlienFleet:
         new_alien = Alien(self, current_x, current_y)
 
         self.fleet.add(new_alien)
+
+    def _check_fleet_edges(self) -> None:
+        """Check if any aliens have reached an edge, and if so, change the fleet's direction."""
+        alien: 'Alien'
+        for alien in self.fleet:
+            if alien.check_edges():
+                self._drop_alien_fleet()
+                self.fleet_direction *= -1
+                break
     
+    def _drop_alien_fleet(self) -> None:
+        """Drop the fleet down by the fleet drop speed."""
+        alien: 'Alien'
+        for alien in self.fleet:
+            alien.y += self.fleet_drop_speed
+    
+    def update_fleet(self) -> None:
+        """Update the position of all aliens in the fleet."""
+        self._check_fleet_edges()
+        self.fleet.update()
+
     def draw(self) -> None:
         """Draw the fleet to the screen."""
         alien: 'Alien'
