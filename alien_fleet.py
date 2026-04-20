@@ -107,3 +107,7 @@ class AlienFleet:
             if alien.rect.bottom >= self.settings.screen_h:
                 return True
         return False
+
+    def check_destroyed_status(self) -> bool:
+        """Check if the fleet has been destroyed."""
+        return not self.fleet

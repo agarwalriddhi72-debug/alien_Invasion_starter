@@ -37,7 +37,6 @@ class AlienInvasion:
 
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
-        self.alien_fleet.create_fleet()
 
     def run_game(self): 
         """Starts the main game loop."""
@@ -66,7 +65,8 @@ class AlienInvasion:
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
 
-        pass
+        if self.alien_fleet.check_destroyed_status():
+            self._reset_level()
 
     def _reset_level(self) -> None:
         self.ship.arsenal.arsenal.empty()
