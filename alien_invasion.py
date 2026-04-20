@@ -56,6 +56,7 @@ class AlienInvasion:
             self._reset_level()
             # subtract one life if possible
 
+
         #check collisions for aliens and bottom of screen
         if self.alien_fleet.check_fleet_bottom():
             self._reset_level()
@@ -66,7 +67,8 @@ class AlienInvasion:
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
 
-        pass
+        if self.alien_fleet.check_destroyed_status():
+            self._reset_level()
 
     def _reset_level(self) -> None:
         self.ship.arsenal.arsenal.empty()
