@@ -85,6 +85,7 @@ class AlienInvasion:
             # Update game stats level
             self.game_stats.update_level()
             # update HUD view
+            self.HUD.update_level()
 
     def _check_game_status(self) -> None:
         """Checks if the game should end or move to the next level."""
