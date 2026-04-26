@@ -8,6 +8,7 @@ if TYPE_CHECKING:
 class Ship:
     """Represents the player's ship in the game."""
     def __init__(self, game: 'AlienInvasion', arsenal: 'Arsenal') -> None:
+        """Initializes the ship with references to the game, settings, screen, and arsenal."""
 
         self.game = game
         self.settings = game.settings
@@ -24,15 +25,17 @@ class Ship:
         self.arsenal = arsenal
 
     def _center_ship(self):
+        """Centers the ship on the screen."""
         self.rect.midbottom = self.boundaries.midbottom
         self.x = float(self.rect.x)
 
     def update(self) -> None:
-        #Updating the ship's postion
+        "Updating the ship's postion"""
         self._update_ship_movement()
         self.arsenal.update_arsenal()
 
     def _update_ship_movement(self):
+        """Updates the ship's position based on movement flags and ensures it stays within screen boundaries."""
         temp_speed = self.settings.ship_speed
         if self.moving_right and self.rect.right < self.boundaries.right:
             self.x += temp_speed

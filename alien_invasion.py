@@ -62,7 +62,7 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS) 
 
     def _check_collisions(self) -> None:
-        #check collisions for ship
+        """Check collisions for ship."""
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
             # subtract one life if possible
@@ -98,11 +98,13 @@ class AlienInvasion:
         
 
     def _reset_level(self) -> None:
+        """Resets the level and creates a new fleet."""
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
     
     def restart_game(self) -> None:
+        """Resets the game to its initial state and starts a new game."""
         self.settings.initialize_dynamic_settings()
         """Restarts the game by resetting all stats and creating a new fleet."""
         self.game_stats.reset_stats()
@@ -142,17 +144,20 @@ class AlienInvasion:
                 self._check_button_clicked()
 
     def _check_button_clicked(self):
+        """Checks if the play button was clicked and restarts the game if so."""
         mouse_pos = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_pos):
             self.restart_game()
 
     def _check_keyup_events(self, event) -> None:
+        """Checks for key releases and updates ship movement accordingly."""
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
     def _check_keydown_events(self, event) -> None:
+        """Checks for key presses and updates ship movement or fires weapon accordingly."""
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = True
         elif event.key == pygame.K_LEFT:

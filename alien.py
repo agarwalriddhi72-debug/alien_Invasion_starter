@@ -23,6 +23,7 @@ class Alien(Sprite):
         self.x = float(self.rect.x)
     
     def update(self) -> None:
+        """Moves the alien left or right based on the fleet's direction and speed."""
         temp_speed = self.settings.fleet_speed
 
         self.x += temp_speed * self.fleet.fleet_direction
@@ -34,4 +35,5 @@ class Alien(Sprite):
         return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
 
     def draw_alien(self) -> None:
+        """Draw the alien at its current location."""
         self.screen.blit(self.image, self.rect)
